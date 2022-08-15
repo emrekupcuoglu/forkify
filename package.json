@@ -14,10 +14,11 @@
   "license": "ISC",
   "browserslist": "> 0.25%, not dead",
   "devDependencies": {
-    "parcel": "^2.6.2",
-    "sass": "^1.54.0"
+    "parcel": "^2.7.0",
+    "sass": "^1.54.4"
   },
   "dependencies": {
+    "@parcel/transformer-sass": "^2.7.0",
     "core-js": "^3.24.1",
     "fractional": "^1.0.0",
     "regenerator-runtime": "^0.13.9"
