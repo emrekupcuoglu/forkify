@@ -287,7 +287,7 @@ const showRecipe = async function () {
 //In software structure basically is how we organize
 //and divide our code into different modules, classes
 //and functions
-//2. Maintability: When we build a project we always need to
+//2. Maintainability: When we build a project we always need to
 //think about the future and keep in mind that the project
 //is never really done. We will always need to change things
 //in the future and will need to maintain the project
@@ -299,20 +299,20 @@ const showRecipe = async function () {
 //And that is only possible with a good structure
 //And a good overall architecture
 
-//The perfert architecture is basically one that allows
-//all of these three aspects of structure, maintability
+//The perfect architecture is basically one that allows
+//all of these three aspects of structure, maintainability
 //and, expendability. In order to achieve that perfect
 //architecture we can create our own architecture from scratch.
 //And that is exactly what we did in the mapty project.
-//However that only workd with a really small project
+//However that only works with a really small project
 //But when the project grows more complex it is going to be
-//very hard to achieve a good architrcture completely
+//very hard to achieve a good architecture completely
 //on our own. We opt for a well established architecture
 //pattern that developers have been using for years or decades
 //Examples are model view controller, model view presenter, Flux, etc.
 //These days many developers actually use a framework like React, Vue, Angular etc.
 //to take care of the architecture for them.
-//So developers don't have to think a lot about architectures ontheir own
+//So developers don't have to think a lot about architectures on their own
 //This is a good idea at a certain point, specially for large scale
 //applications. However, it is very important that you really know JavaScript
 //before switching to some of these frameworks. And that includes
@@ -322,7 +322,7 @@ const showRecipe = async function () {
 //framework that you choose down the road. No matter where
 //the architecture comes from and who develops it, there are some components
 //Every architecture must have:
-//BUSINESS LOGIC, STATE,HTPP LIBRARY,APPLICATION LOGIC(ROUTER), PRESENTATION LOGIC(UI LAYER)
+//BUSINESS LOGIC, STATE, HTTP LIBRARY, APPLICATION LOGIC(ROUTER), PRESENTATION LOGIC(UI LAYER)
 
 
 //?BUSINESS LOGIC
@@ -333,17 +333,17 @@ const showRecipe = async function () {
 //?STATE
 //Stores all the data about the application's front end
 //So the state should store any data you might fetch from an API
-//or the data the user inputs or what page the useara is currently viewing etc.
+//or the data the user inputs or what page the user is currently viewing etc.
 //Should be the single source of truth.
 //The UI should be kept in sync with the state.
-//Storing and displaying data and keeping everything in sycn
+//Storing and displaying data and keeping everything in sync
 //is one of the most difficult tasks when building web applications.
 //Thats why there are many state management libraries like reduX or mobX
 //But in this project wea will keep things simple and
 //use a simple object to store out entire state
 
 //?HTTP LIBRARY
-//Responsible for making and recieving AJAX requests
+//Responsible for making and receiving AJAX requests
 //Optional but almost always necessary in real world apps
 
 //?APPLICATION LOGIC(ROUTER)
@@ -351,13 +351,13 @@ const showRecipe = async function () {
 //of the application itself
 //Handles navigation and UI events
 
-//?PRESANTATION LOGIC(UI LAYER)
+//?PRESENTATION LOGIC(UI LAYER)
 //Code that is concerned about the visible part of
 //the application. Essentially displays application
 //state
 
-//Any good architecture has a way of seperating these components.
-//So instead ofmixing every thing together in one big file
+//Any good architecture has a way of separating these components.
+//So instead of mixing every thing together in one big file
 //and in one big mess.
 //Let's take a look at a well established architecture pattern
 //that we are going to use in this project
@@ -368,7 +368,7 @@ const showRecipe = async function () {
 
 //*VIEW
 //The view is for the presentation logic.
-//It is the part that interacts eith the user.
+//It is the part that interacts with the user.
 
 //*MODEL
 //The model is all about the applications data
@@ -383,9 +383,9 @@ const showRecipe = async function () {
 //It creates a bridge between the view and the controller
 //The model and the view should know nothing about each other
 //Controller connects them together
-//One of the goals of this the MVC pattern is to seperate the
-//application and business logic. Which makes develoing easier.
-//But because of the seperation we need something to connect
+//One of the goals of this the MVC pattern is to separate the
+//application and business logic. Which makes developing easier.
+//But because of the separation we need something to connect
 //these parts, and that is the controller.
 //*Check lecture 291 for more in depth information
 

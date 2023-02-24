@@ -13,40 +13,35 @@ const timeout = function (s) {
   });
 };
 
-
 //We created the AJAX function to refactor getJSON and the sendJSON functions
 export const AJAX = async function (url, uploadData = undefined) {
-
   try {
-    const fetchPromise = uploadData ? fetch(url, {
-
-      method: "POST",
-      //headers are basicaly some snippets of text
-      //which are information about the request itself.
-      //Many of them are standart.
-      headers: {
-        //With this we tell the API the data we are
-        //going to send will be in a json format
-        "Content-Type": "application/json"
-      },
-      //Body is basically the data we want to send
-      body: JSON.stringify(uploadData)
-
-    }) : fetch(url);
+    const fetchPromise = uploadData
+      ? fetch(url, {
+          method: "POST",
+          //headers are basically some snippets of text
+          //which are information about the request itself.
+          //Many of them are standart.
+          headers: {
+            //With this we tell the API the data we are
+            //going to send will be in a json format
+            "Content-Type": "application/json",
+          },
+          //Body is basically the data we want to send
+          body: JSON.stringify(uploadData),
+        })
+      : fetch(url);
 
     const res = await Promise.race([fetchPromise, timeout(TIMEOUT_SEC)]);
     const data = await res.json();
     if (!res.ok) {
       throw new Error(`${data.message} (${res.status})`);
-    };
+    }
     return data;
-  }
-  catch (err) {
+  } catch (err) {
     //We re throw the error so that it can be handled in the model.js
     throw err;
-
   }
-
 };
 
 //To start let's create a function that will get json
@@ -59,15 +54,12 @@ export const getJSON = async function (url) {
     const data = await res.json();
     if (!res.ok) {
       throw new Error(`${data.message} (${res.status})`);
-    };
+    }
     return data;
-  }
-  catch (err) {
+  } catch (err) {
     //We re throw the error so that it can be handled in the model.js
     throw err;
-
   }
-
 };
 
 //?Sending data using the fetch() fucntion
@@ -77,13 +69,8 @@ export const getJSON = async function (url) {
 //For that besides passing in a url we also need to
 //pass in an object of options.
 
-
-
 export const sendJSON = async function (url, uploadData) {
   try {
-
-
-
     const fetchPromise = fetch(url, {
       method: "POST",
       //headers are basicaly some snippets of text
@@ -92,11 +79,10 @@ export const sendJSON = async function (url, uploadData) {
       headers: {
         //With this we tell the API the data we are
         //going to send will be in a json format
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       //Body is basically the data we want to send
-      body: JSON.stringify(uploadData)
-
+      body: JSON.stringify(uploadData),
     });
 
     //We will still race againts the timeout so that it doesn't run forever
@@ -106,14 +92,10 @@ export const sendJSON = async function (url, uploadData) {
     const data = await res.json();
     if (!res.ok) {
       throw new Error(`${data.message} (${res.status})`);
-    };
+    }
     return data;
-  }
-  catch (err) {
+  } catch (err) {
     //We re throw the error so that it can be handled in the model.js
     throw err;
-
   }
-
 };
-
