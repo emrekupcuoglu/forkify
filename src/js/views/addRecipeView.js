@@ -45,25 +45,8 @@ class AddRecipeView extends View {
     this._parentElement.addEventListener("submit", function (e) {
       e.preventDefault();
       const dataArr = [...new FormData(this)];
-      //With ES219 there is a really useful
-      //feature to convert entries into an object
       const data = Object.fromEntries(dataArr);
       handler(data);
-
-      //We could of converted the entries
-      //to an object likes this as well
-      // const convertToObj = function () {
-      //   const obj = {};
-      //   newRecipe.forEach(arr => {
-      //     obj[arr[0]] = arr[1];
-
-      //   });
-      //   console.log(obj);
-      // };
-      // convertToObj();
-
-      //We also could of used a library like lodash
-      //You might see this on old code bases
     });
   }
 

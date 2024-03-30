@@ -88,5 +88,4 @@ class PaginationView extends View {
     return this.#generateMarkupCode(curPage);
   }
 }
-
 export default new PaginationView();

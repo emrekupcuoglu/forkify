@@ -1,6 +1,5 @@
 import { async } from "regenerator-runtime";
 import { API_URL, KEY, DEFAULT_SERVINGS, RESULTS_PER_PAGE } from "./config.js";
-// import { getJSON, sendJSON } from "./helpers.js";
 import { AJAX } from "./helpers.js";
 
 export const state = {
@@ -26,11 +25,9 @@ const createRecipeObject = function (data) {
     servings: recipe.servings,
     cookingTime: recipe.cooking_time,
     ingredients: recipe.ingredients,
-    //!Handy way to conditionally add property to an object
-    //If recipe.key exist than it executes the right hand operation
-    //if not it doesn't execute it
-    //and it spreads the resulting object
-    //this is same as key:recipe.key but only if recipe.key exist
+    // ! Handy way to conditionally add property to an object
+    // We used parenthesis to wrap the object so that we can use the spread operator.
+    // This is same as key:recipe.key but only if recipe.key exist
     ...(recipe.key && { key: recipe.key }),
   };
 };
@@ -40,42 +37,6 @@ export const loadRecipe = async function (id) {
     const data = await AJAX(`${API_URL}${id}?key=${KEY}`);
 
     state.recipe = createRecipeObject(data);
-    //Creating a new object from the object we get from the API
-    //We do this because the API has unusual variable names for JavaScript e.g cooking_time
-    //We used destructuring
-
-    //This also works
-    // const recipe = {
-    //   id: data.data.recipe.id,
-    //   title: data.data.recipe.title,
-    //   publisher: data.data.recipe.publisher,
-    //   sourceUrl: data.data.recipe.sourceUrl,
-    //   image: data.data.recipe.image_url,
-    //   servings: data.data.recipe.servings,
-    //   cookingTime: data.data.recipe.cooking_time,
-    //   ingredients: data.data.recipe.ingredients,
-    // };
-    //Or we can create a recipeData object
-    //and then take the data from that to a new object we create
-    //That way we wouldn't mutate the recipe object
-
-    //Or we can use the map() method to return a new array with only the object we need
-    // const recipeDataArr = [data.data.recipe];
-    // const recipeArr = recipeArr.map(entry => {
-    //   console.log(entry);
-    //   return recipe = {
-    //     id: entry.id,
-    //     title: entry.title,
-    //     publisher: entry.publisher,
-    //     sourceUrl: entry.sourceUrl,
-    //     image: entry.image_url,
-    //     servings: entry.servings,
-    //     cookingTime: entry.cooking_time,
-    //     ingredients: entry.ingredients,
-    //   }
-    // });
-    // const [recipe]=recipeArr;
-    // console.log(recipe);
 
     //Check if it is bookmarked
     if (state.bookmarks.some((bookmark) => bookmark.id === id)) {
@@ -84,11 +45,6 @@ export const loadRecipe = async function (id) {
       state.recipe.bookmarked = false;
     }
   } catch (err) {
-    //We don't want to handle the error here
-    //So we need to re throw the error again
-    //First we re-throw the error in the helpers.js
-    //then we re-throw it here
-    //and finally handle it inside the controller.js
     throw err;
   }
 };
@@ -119,8 +75,7 @@ export const loadSearchResults = async function (query) {
 export const getSearchResultsPage = function (page = state.search.page) {
   state.search.page = page;
   //Calculating the number of results per page
-  //We take the page number and multiply it by
-  //the amount of results we want.
+
   const start = (page - 1) * state.search.resultsPerPage;
   const end = page * state.search.resultsPerPage;
 
@@ -175,7 +130,6 @@ console.log(state.bookmarks);
 const clearBookmarks = function () {
   localStorage.clear("bookmarks");
 };
-// clearBookmarks();
 
 export const uploadRecipe = async function (newRecipe) {
   try {

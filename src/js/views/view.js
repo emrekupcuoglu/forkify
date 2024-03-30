@@ -25,23 +25,12 @@ export default class View {
   }
 
   update(data) {
-    //!Watch lecture 302 Developing a DOM Updating Algorithm for more info
-    //This update method takes data, compares what has changed
-    //and renders the changed parts.
-
     this._data = data;
     const newMarkup = this._generateMarkup();
+    // ? Basic VDOM implementation
 
-    //createRange returns a Range object(Range is a web API).
-    //createContextualFragment is a method of the
-    //Range object. createContextualFragment takes a string
-    //as an argument and it converts that string to a
-    //document fragment.
-    //So createContextualFragment will convert that
-    //string into real DOM node objects.
-    //newDom will become a big object that is basically a virtual DOM
-    //A virtual DOM, is a DOM that is not living on the page
-    //but is living on the memory.
+    // createRange returns a Range object
+    // createContextualFragment takes a string as an argument and it converts that string to a document fragment. createContextualFragment will convert that string into real DOM node objects.
     const newDOM = document.createRange().createContextualFragment(newMarkup);
     const newElements = Array.from(newDOM.querySelectorAll("*"));
     const curElements = Array.from(this._parentElement.querySelectorAll("*"));
@@ -51,60 +40,38 @@ export default class View {
       //isEqualNode compares two nodes and returns a boolean.
       // console.log(curEl, newEl.isEqualNode(curEl));
 
+      // This doesn't work because when there is a change the container that contains the change is also automatically changed and this creates a problem
+
       // if (!newEl.isEqualNode(curEl)) {
-      //This doesn't work because when there is a change
-      //the container that contains the change is also
-      //automatically changed and this creates a problem
       // curEl.textContent = newEl.textContent;
 
-      //We can use nodeValue to fix this.
-      //Value of the nodeValue will be null
-      //for most things except text, comment
-      //and a few other things
-      //If it is text it will return the contents of the
-      //text node.
+      // We can use nodeValue to fix this. Value of the nodeValue will be null for most things except text, comment, and a few other things. If it is text, it will return the contents of the text node.
       // }
 
-      //We need to select the child node because
-      //text is inside the child node
+      // We need to select the child node because, text is inside the child node
 
       if (
         !newEl.isEqualNode(curEl) &&
         newEl.firstChild?.nodeValue.trim() !== ""
       ) {
-        //Update Changed TEXT
+        // Update Changed TEXT
         // console.log("✔", newEl.firstChild?.nodeValue.trim());
         curEl.textContent = newEl.textContent;
       }
       //! What if the first child is not a text but maybe the second one is text?
-      //It works because of how elements in Html are usually written. Let's say we have this element
+      // This works because of how elements in Html are usually written. Let's say we have this element
 
       // <h1 class='heading'>
       //   <span>hello</span>
       // </h1>
-      // What is the first child of this element? I'll probably surprise you, but it's not <span>. It's a string consisting of 3 whitespace characters.
+      // The first child of this element is not actually <span>. It's a text node that contains a newline character and two whitespaces. This is because of how the element is written in the HTML file. Because I put a newline character and two whitespaces after <h1 class='heading'> to format the code, which also counts as a child of this <h1> element.
 
-      // Why? Because I put a newline character and two whitespaces after <h1 class='heading'> to format the code, which also counts as a child of this <h1> element.
-
-      // If I would write this element differently, the nodeValue would return null
+      // TODO: If I would write this element differently, the nodeValue would return null
 
       // <h1 class='heading'><span>hello</span></h1>
 
       //Update Changed ATTRIBUTES
       if (!newEl.isEqualNode(curEl)) {
-        //We are replacing all the attributes
-        //on the old element with the attributes
-        //from the new element
-        // console.log("curAttr", curEl.attributes);
-        // console.log("newAttr", Array.from(newEl.attributes));
-
-        //We take the name attribute and
-        //set it to the value attribute
-        //We are doing this:
-        //attr.name=attr.value
-        //attr.name is data-set-servings
-        //So we are updating the data-set-servings
-        //with the new value.
         Array.from(newEl.attributes).forEach((attr) => {
           curEl.setAttribute(attr.name, attr.value);
         });
