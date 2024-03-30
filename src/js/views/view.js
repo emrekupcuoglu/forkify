@@ -1,13 +1,12 @@
 const icons = new URL("../../img/icons.svg", import.meta.url);
 
 export default class View {
-
   _data;
 
   /**
    * Redner the recieved object to the DOM.
-   * @param {Object | Object[]} data the data to be rendered(e.g. recipe) 
-   * @param {boolean} [render=true] If false create markup string instead of rendering to the DOM 
+   * @param {Object | Object[]} data the data to be rendered(e.g. recipe)
+   * @param {boolean} [render=true] If false create markup string instead of rendering to the DOM
    * @returns {undefined | string} A markup string is returned if render=false
    * @this {Object} View instance
    * @author Emre Küpçüoğlu
@@ -15,14 +14,14 @@ export default class View {
    */
   render(data, render = true) {
     //Checking if the data is undefined, null OR if the data is an empty array
-    if (!data || (Array.isArray(data) && data.length === 0)) return this.renderError();
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
     this._data = data;
     // console.log(data);
     const markup = this._generateMarkup();
     if (!render) return markup;
     this.#clear();
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
-
   }
 
   update(data) {
@@ -32,7 +31,6 @@ export default class View {
 
     this._data = data;
     const newMarkup = this._generateMarkup();
-
 
     //createRange returns a Range object(Range is a web API).
     //createContextualFragment is a method of the
@@ -46,21 +44,21 @@ export default class View {
     //but is living on the memory.
     const newDOM = document.createRange().createContextualFragment(newMarkup);
     const newElements = Array.from(newDOM.querySelectorAll("*"));
-    const curElelements = Array.from(this._parentElement.querySelectorAll("*"));
+    const curElements = Array.from(this._parentElement.querySelectorAll("*"));
 
     newElements.forEach((newEl, i) => {
-      const curEl = curElelements[i];
+      const curEl = curElements[i];
       //isEqualNode compares two nodes and returns a boolean.
       // console.log(curEl, newEl.isEqualNode(curEl));
 
       // if (!newEl.isEqualNode(curEl)) {
       //This doesn't work because when there is a change
       //the container that contains the change is also
-      //automaticly changed and this creates a problem
+      //automatically changed and this creates a problem
       // curEl.textContent = newEl.textContent;
 
       //We can use nodeValue to fix this.
-      //Value of hte nodeValue will be null
+      //Value of the nodeValue will be null
       //for most things except text, comment
       //and a few other things
       //If it is text it will return the contents of the
@@ -70,7 +68,10 @@ export default class View {
       //We need to select the child node because
       //text is inside the child node
 
-      if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== "") {
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild?.nodeValue.trim() !== ""
+      ) {
         //Update Changed TEXT
         // console.log("✔", newEl.firstChild?.nodeValue.trim());
         curEl.textContent = newEl.textContent;
@@ -91,7 +92,6 @@ export default class View {
 
       //Update Changed ATTRIBUTES
       if (!newEl.isEqualNode(curEl)) {
-
         //We are replacing all the attributes
         //on the old element with the attributes
         //from the new element
@@ -105,16 +105,11 @@ export default class View {
         //attr.name is data-set-servings
         //So we are updating the data-set-servings
         //with the new value.
-        Array.from(newEl.attributes).forEach(attr => {
+        Array.from(newEl.attributes).forEach((attr) => {
           curEl.setAttribute(attr.name, attr.value);
         });
       }
-
     });
-
-
-
-
   }
 
   #clear() {
@@ -131,8 +126,7 @@ export default class View {
 
     this.#clear();
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
-
-  };
+  }
 
   renderError(message = this._errorMessage) {
     const markup = `
@@ -161,5 +155,4 @@ export default class View {
     this.#clear();
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
-
 }

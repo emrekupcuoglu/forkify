@@ -3,7 +3,6 @@ import View from "./view";
 const icons = new URL("../../img/icons.svg", import.meta.url);
 
 class AddRecipeView extends View {
-
   _parentElement = document.querySelector(".upload");
   _message = "Recipe was succesfully uploaded.";
 
@@ -11,7 +10,6 @@ class AddRecipeView extends View {
   _overlay = document.querySelector(".overlay");
   _btnOpen = document.querySelector(".nav__btn--add-recipe");
   _btnClose = document.querySelector(".btn--close-modal");
-
 
   constructor() {
     super();
@@ -33,7 +31,6 @@ class AddRecipeView extends View {
     this._overlay.classList.remove("hidden");
     this._window.classList.remove("hidden");
   }
-
 
   #addHandlerShowWindow() {
     this._btnOpen.addEventListener("click", this.openWindow.bind(this));
@@ -139,13 +136,7 @@ class AddRecipeView extends View {
   <span>Upload</span>
 </button>
 `;
-
-
   }
-
-
-
 }
-
 
 export default new AddRecipeView();

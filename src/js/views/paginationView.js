@@ -16,11 +16,11 @@ class PaginationView extends View {
   }
 
   #generateMarkupCode(curPage, buttonType) {
-
-
     if (buttonType === "prevBtn") {
       return `
-      <button data-goto="${curPage - 1}" class="btn--inline pagination__btn--prev">
+      <button data-goto="${
+        curPage - 1
+      }" class="btn--inline pagination__btn--prev">
         <svg class="search__icon">
           <use href="${icons.href}#icon-arrow-left"></use>
         </svg>
@@ -31,7 +31,9 @@ class PaginationView extends View {
 
     if (buttonType === "nextBtn") {
       return `
-      <button data-goto="${curPage + 1}" class="btn--inline pagination__btn--next">
+      <button data-goto="${
+        curPage + 1
+      }" class="btn--inline pagination__btn--next">
         <span>Page ${curPage + 1}</span>
         <svg class="search__icon">
           <use href="${icons.href}#icon-arrow-right"></use>
@@ -41,27 +43,30 @@ class PaginationView extends View {
     }
 
     return `
-    <button data-goto="${curPage - 1}" class="btn--inline pagination__btn--prev">
+    <button data-goto="${
+      curPage - 1
+    }" class="btn--inline pagination__btn--prev">
       <svg class="search__icon">
         <use href="${icons.href}#icon-arrow-left"></use>
       </svg>
       <span>Page ${curPage - 1}</span>
     </button>
-    <button data-goto="${curPage + 1}" class="btn--inline pagination__btn--next">
+    <button data-goto="${
+      curPage + 1
+    }" class="btn--inline pagination__btn--next">
     <span>Page ${curPage + 1}</span>
     <svg class="search__icon">
       <use href="${icons.href}#icon-arrow-right"></use>
     </svg>
   </button>
 `;
-
   }
 
   _generateMarkup() {
-
     const curPage = this._data.page;
-    const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
-
+    const numPages = Math.ceil(
+      this._data.results.length / this._data.resultsPerPage
+    );
 
     //Page 1 and there are other pages
     if (curPage === 1 && numPages > 1) {
@@ -81,13 +86,7 @@ class PaginationView extends View {
 
     //Other page
     return this.#generateMarkupCode(curPage);
-
   }
-
-
-
-
 }
-
 
 export default new PaginationView();

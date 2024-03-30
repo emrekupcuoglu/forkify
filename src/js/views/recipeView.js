@@ -17,23 +17,19 @@ import View from "./view";
 const icons = new URL("../../img/icons.svg", import.meta.url);
 import { Fraction } from "fractional";
 
-
 class RecipeView extends View {
   _parentElement = document.querySelector(".recipe");
   _errorMessage = "We could not find that recipe. Please try another one";
   _message = "";
 
-
-
-
   _generateMarkup() {
     console.log(this._data);
 
-
-
     return `
     <figure class="recipe__fig">
-      <img src="${this._data.image}" alt="${this._data.title}" class="recipe__img" />
+      <img src="${this._data.image}" alt="${
+      this._data.title
+    }" class="recipe__img" />
       <h1 class="recipe__title">
         <span>${this._data.title}</span>
       </h1>
@@ -44,21 +40,29 @@ class RecipeView extends View {
         <svg class="recipe__info-icon">
           <use href="${icons.href}#icon-clock"></use>
         </svg>
-        <span class="recipe__info-data recipe__info-data--minutes">${this._data.cookingTime}</span>
+        <span class="recipe__info-data recipe__info-data--minutes">${
+          this._data.cookingTime
+        }</span>
         <span class="recipe__info-text">minutes</span>
       </div>
       <div class="recipe__info">
         <svg class="recipe__info-icon">
           <use href="${icons.href}#icon-users"></use>
         </svg>
-        <span class="recipe__info-data recipe__info-data--people">${this._data.servings}</span>
+        <span class="recipe__info-data recipe__info-data--people">${
+          this._data.servings
+        }</span>
         <span class="recipe__info-text">servings</span>
-          <button data-servings="${this._data.servings}" class="btn--tiny btn--decrease-servings">
+          <button data-servings="${
+            this._data.servings
+          }" class="btn--tiny btn--decrease-servings">
             <svg>
               <use href="${icons.href}#icon-minus-circle"></use>
             </svg>
           </button>
-          <button data-servings="${this._data.servings}" class="btn--tiny btn--increase-servings">
+          <button data-servings="${
+            this._data.servings
+          }" class="btn--tiny btn--increase-servings">
             <svg>
               <use href="${icons.href}#icon-plus-circle"></use>
             </svg>
@@ -73,7 +77,9 @@ class RecipeView extends View {
       </div>
       <button class="btn--round btn--bookmark">
         <svg class="">
-          <use href="${icons.href}#icon-bookmark${this._data.bookmarked ? "-fill" : ""}"></use>
+          <use href="${icons.href}#icon-bookmark${
+      this._data.bookmarked ? "-fill" : ""
+    }"></use>
         </svg>
       </button>
     </div>
@@ -91,7 +97,9 @@ class RecipeView extends View {
       <h2 class="heading--2">How to cook it</h2>
       <p class="recipe__directions-text">
         This recipe was carefully designed and tested by
-        <span class="recipe__publisher">${this._data.publisher}</span>. Please check out
+        <span class="recipe__publisher">${
+          this._data.publisher
+        }</span>. Please check out
         directions at their website.
       </p>
       <a
@@ -114,7 +122,9 @@ class RecipeView extends View {
           <svg class="recipe__icon">
             <use href="${icons.href}#icon-check"></use>
           </svg>
-          <div class="recipe__quantity">${ing.quantity !== null ? new Fraction(ing.quantity).toString() : ""}</div>
+          <div class="recipe__quantity">${
+            ing.quantity !== null ? new Fraction(ing.quantity).toString() : ""
+          }</div>
           <div class="recipe__description">
             <span class="recipe__unit">${ing.unit}</span>
             ${ing.description}
@@ -122,7 +132,7 @@ class RecipeView extends View {
         </li>
 
   `;
-  };
+  }
 
   addHandlerRender(handler) {
     //We listen to the hash change using an event listener
@@ -132,26 +142,24 @@ class RecipeView extends View {
     //But if we open a completely new page with the hash
     //It doesn't work because has doesn't change
     //Instead we can use the load event the run this
-    //function when the page loads 
+    //function when the page loads
     // window.addEventListener("load", controlRecipes);
 
     //*We have duplicate code above
     //We can do this all at the same time
     //Imagine you had ten events which you
     //wanted to run the same event handler function
-    ["hashchange", "load"].forEach(event => window.addEventListener(event, handler));
-
-
+    ["hashchange", "load"].forEach((event) =>
+      window.addEventListener(event, handler)
+    );
   }
 
   addHandlerUpdateServings(handler) {
     this._parentElement.addEventListener("click", function (e) {
-
       const btn = e.target.closest(".btn--tiny");
       if (!btn) return;
       const curServing = Number(btn.dataset.servings);
       if (btn.classList.contains("btn--increase-servings")) {
-
         const newServings = curServing + 1;
         handler(newServings);
       }
@@ -159,11 +167,7 @@ class RecipeView extends View {
         const newServings = curServing - 1;
         handler(newServings);
       }
-
     });
-
-
-
   }
 
   addHandlerAddBookmark(handler) {
@@ -173,7 +177,6 @@ class RecipeView extends View {
       handler();
     });
   }
-
-};
+}
 
 export default new RecipeView();
